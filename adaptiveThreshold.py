@@ -1,0 +1,26 @@
+import python_image_proc.practice.cv2
+from matplotlib import pyplot as plt
+
+
+
+if __name__ == '__main__':
+
+    img = python_image_proc.practice.cv2.imread('/home/jps/Pictures/mypic.png', 0)
+    img = python_image_proc.practice.cv2.medianBlur(img, 5)
+
+    ret,th1 = python_image_proc.practice.cv2.threshold(img, 127, 255, python_image_proc.practice.cv2.THRESH_BINARY)
+    th2 = python_image_proc.practice.cv2.adaptiveThreshold(img, 255,
+                                                           python_image_proc.practice.cv2.ADAPTIVE_THRESH_MEAN_C, python_image_proc.practice.cv2.THRESH_BINARY, 11, 2)
+    th3 = python_image_proc.practice.cv2.adaptiveThreshold(img, 255,
+                                                           python_image_proc.practice.cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
+                                                           python_image_proc.practice.cv2.THRESH_BINARY, 11, 2)
+
+    titles = ['Original Image', 'Global Thresholding (v = 127)',
+                'Adaptive Mean Thresholding', 'Adaptive Gaussian Thresholding']
+    images = [img, th1, th2, th3]
+
+    for i in xrange(4):
+        plt.subplot(2,2,i+1),plt.imshow(images[i],'gray')
+        plt.title(titles[i])
+        plt.xticks([]),plt.yticks([])
+    plt.show()
